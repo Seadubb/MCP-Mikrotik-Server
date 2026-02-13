@@ -1,0 +1,39 @@
+profile:
+  name: "Corporate Office Router"
+  description: "Standard office router with VLANs, firewall, and DHCP for multi-department network"
+  variables:
+    - WAN_INTERFACE
+    - LAN_BRIDGE
+
+  interfaces:
+    wan: "${WAN_INTERFACE}"
+    lan_bridge: "${LAN_BRIDGE}"
+    vlans:
+      - id: 10
+        name: "Management"
+        subnet: "192.168.10.0/24"
+      - id: 20
+        name: "Users"
+        subnet: "192.168.20.0/24"
+      - id: 30
+        name: "Guest"
+        subnet: "192.168.30.0/24"
+
+  firewall:
+    default_policy: "drop"
+    rules:
+      - "allow established/related connections"
+      - "drop invalid connections"
+      - "allow ICMP"
+      - "NAT outbound traffic"
+
+  dhcp_servers:
+    - vlan: 10
+      range: "192.168.10.100-192.168.10.200"
+      subnet: "192.168.10.0/24"
+    - vlan: 20
+      range: "192.168.20.100-192.168.20.250"
+      subnet: "192.168.20.0/24"
+    - vlan: 30
+      range: "192.168.30.10-192.168.30.50"
+      subnet: "192.168.30.0/24"

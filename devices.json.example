@@ -1,0 +1,40 @@
+{
+  "devices": [
+    {
+      "id": "router-main",
+      "name": "Main Gateway Router",
+      "host": "192.168.88.1",
+      "port": 22,
+      "username": "admin",
+      "password": "your-password-here",
+      "connectionType": "ssh",
+      "routerOSVersion": 7,
+      "timeout": 10000,
+      "description": "Primary gateway router"
+    },
+    {
+      "id": "router-branch",
+      "name": "Branch Office Router",
+      "host": "192.168.1.1",
+      "port": 8728,
+      "username": "admin",
+      "password": "your-password-here",
+      "connectionType": "api",
+      "routerOSVersion": 6,
+      "timeout": 10000,
+      "description": "Branch office MikroTik"
+    },
+    {
+      "id": "router-legacy",
+      "name": "Legacy Router",
+      "host": "10.0.0.1",
+      "port": 23,
+      "username": "admin",
+      "password": "your-password-here",
+      "connectionType": "telnet",
+      "routerOSVersion": 6,
+      "timeout": 10000,
+      "description": "Legacy Telnet-only router (not recommended)"
+    }
+  ]
+}

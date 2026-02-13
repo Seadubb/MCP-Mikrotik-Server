@@ -1,0 +1,33 @@
+profile:
+  name: "L2TP VPN for Remote Access"
+  description: "L2TP/IPsec VPN server configuration for remote users"
+  variables:
+    - IPSEC_SECRET
+    - DNS_SERVER
+
+  vpn_config:
+    type: "l2tp"
+    use_ipsec: true
+    ipsec_secret: "${IPSEC_SECRET}"
+    address_pool: "10.10.10.10-10.10.10.50"
+    dns_servers: "${DNS_SERVER}"
+
+  commands:
+    # Configure L2TP server
+    - "/interface l2tp-server server set enabled=yes use-ipsec=yes ipsec-secret=${IPSEC_SECRET} default-profile=vpn-profile"
+
+    # Create VPN address pool
+    - "/ip pool add name=vpn-pool ranges=10.10.10.10-10.10.10.50"
+
+    # Create PPP profile for VPN users
+    - "/ppp profile add name=vpn-profile local-address=10.10.10.1 remote-address=vpn-pool dns-server=${DNS_SERVER} use-encryption=yes"
+
+    # Firewall rules for L2TP/IPsec
+    - "/ip firewall filter add chain=input action=accept protocol=udp dst-port=500,4500,1701 comment=\"Allow L2TP/IPsec\""
+    - "/ip firewall filter add chain=input action=accept protocol=ipsec-esp comment=\"Allow IPsec ESP\""
+
+    # Allow VPN clients to access LAN
+    - "/ip firewall filter add chain=forward action=accept src-address=10.10.10.0/24 comment=\"Allow VPN to LAN\""
+
+    # NAT exemption for VPN traffic
+    - "/ip firewall nat add chain=srcnat action=accept src-address=10.10.10.0/24 dst-address=192.168.0.0/16 comment=\"VPN NAT exemption\""

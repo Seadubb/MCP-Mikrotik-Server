@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mikrotik-mcp-server"
+version = "1.0.0"
+description = "MCP Server for MikroTik RouterOS 6 and 7 with SSH, Telnet, and API support"
+readme = "README_PYTHON.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+keywords = ["mikrotik", "routeros", "mcp", "ssh", "telnet", "api", "network"]
+authors = [
+    {name = "MikroTik MCP Server"}
+]
+dependencies = [
+    "mcp>=1.0.0",
+    "paramiko>=3.4.0",
+    "telnetlib3>=2.0.0",
+    "routeros-api>=0.17.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "python-dotenv>=1.0.0",
+    "aiosqlite>=0.19.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "black>=23.0.0",
+    "mypy>=1.7.0",
+]
+
+[project.scripts]
+mikrotik-mcp = "mikrotik_mcp.server:main"
+
+[tool.setuptools]
+packages = ["mikrotik_mcp"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

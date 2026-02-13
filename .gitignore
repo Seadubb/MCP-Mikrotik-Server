@@ -1,0 +1,83 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment and secrets
+.env
+.env.local
+devices.json
+audit.db
+audit.db-journal
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+.pydevproject
+.project
+.settings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Serena AI agent cache
+.serena/
+
+# Backup files
+backups/
+*.rsc
+*.backup
+
+# GitHub upload helper files (keep locally, don't upload)
+CLEANUP_SUMMARY.md
+GITHUB_CHECKLIST.md
+verify-github-ready.py
+cleanup-dev-files.bat
+READY_TO_UPLOAD.md

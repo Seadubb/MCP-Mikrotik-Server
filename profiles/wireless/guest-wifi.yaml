@@ -1,0 +1,51 @@
+profile:
+  name: "Guest WiFi Network"
+  description: "Isolated guest WiFi with bandwidth limits and internet-only access"
+  variables:
+    - WIFI_PASSWORD
+    - GUEST_SUBNET
+    - WAN_INTERFACE
+
+  wireless:
+    ssid: "GuestNetwork"
+    security: "wpa2"
+    password: "${WIFI_PASSWORD}"
+    isolation: true
+    bandwidth_limit: "5M/5M"
+
+  commands:
+    # Create guest VLAN
+    - "/interface vlan add name=guest-vlan vlan-id=99 interface=bridge"
+
+    # Add IP address to guest VLAN
+    - "/ip address add address=${GUEST_SUBNET} interface=guest-vlan"
+
+    # Create DHCP pool for guests
+    - "/ip pool add name=guest-pool ranges=${GUEST_SUBNET}"
+
+    # Create DHCP server for guests
+    - "/ip dhcp-server add name=guest-dhcp interface=guest-vlan address-pool=guest-pool lease-time=2h"
+
+    # Add DHCP network
+    - "/ip dhcp-server network add address=${GUEST_SUBNET} gateway=${GUEST_SUBNET} dns-server=8.8.8.8,8.8.4.4"
+
+    # Create wireless security profile
+    - "/interface wireless security-profiles add name=guest-profile mode=dynamic-keys authentication-types=wpa2-psk wpa2-pre-shared-key=${WIFI_PASSWORD}"
+
+    # Configure wireless interface for guest network
+    - "/interface wireless set wlan1 ssid=GuestNetwork security-profile=guest-profile mode=ap-bridge disabled=no"
+
+    # Add wireless interface to guest bridge
+    - "/interface bridge port add bridge=bridge interface=guest-vlan"
+
+    # Firewall: Isolate guests from LAN
+    - "/ip firewall filter add chain=forward action=drop src-address=${GUEST_SUBNET} dst-address=192.168.0.0/16 comment=\"Block guest to LAN\""
+
+    # Firewall: Allow guests to internet
+    - "/ip firewall filter add chain=forward action=accept src-address=${GUEST_SUBNET} comment=\"Allow guest to internet\""
+
+    # NAT for guest network
+    - "/ip firewall nat add chain=srcnat action=masquerade src-address=${GUEST_SUBNET} out-interface=${WAN_INTERFACE} comment=\"Guest NAT\""
+
+    # Bandwidth limiting (per client)
+    - "/queue simple add name=guest-bandwidth target=${GUEST_SUBNET} max-limit=5M/5M comment=\"Guest bandwidth limit\""

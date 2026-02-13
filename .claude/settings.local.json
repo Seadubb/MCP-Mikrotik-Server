@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /s /b)",
+      "Bash(Get-Item \"C:\\\\Users\\\\KwameAsamoah\\\\OneDrive - Dynamic Data Solutions Ltd\\\\Desktop\\\\WORK SCRIPTS\\\\Mikrotik\\\\ROS_211025_0809_10218.pdf\")",
+      "Bash(Select-Object Name, Length, CreationTime, LastWriteTime)",
+      "Bash(Format-List)",
+      "Bash(pdfinfo:*)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(python -m mikrotik_mcp.server:*)",
+      "Bash(dir:*)",
+      "Bash(python -m py_compile:*)",
+      "Bash(findstr:*)",
+      "Bash(pip show:*)",
+      "Bash(python -c:*)",
+      "Bash(test:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python generate_pdf.py:*)",
+      "Bash(python generate_pdf_reportlab.py:*)",
+      "Bash(pytest:*)",
+      "Bash(chmod:*)",
+      "Bash(ls:*)",
+      "mcp__plugin_serena_serena__list_dir",
+      "mcp__plugin_serena_serena__activate_project",
+      "mcp__plugin_serena_serena__check_onboarding_performed",
+      "mcp__plugin_serena_serena__onboarding",
+      "mcp__plugin_serena_serena__read_file",
+      "mcp__plugin_serena_serena__get_symbols_overview",
+      "mcp__plugin_serena_serena__write_memory",
+      "mcp__plugin_serena_serena__list_memories",
+      "Bash(powershell -Command:*)",
+      "Bash(if exist .coverage del .coverage)",
+      "Bash(if exist audit.db del audit.db)",
+      "Bash(if exist audit.db-journal del audit.db-journal)",
+      "Bash(python verify-github-ready.py:*)"
+    ]
+  }
+}
