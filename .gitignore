@@ -40,6 +40,8 @@ npm-debug.log*
 devices.json
 audit.db
 audit.db-journal
+dhcp_leases.py
+harden.py
 
 # OS files
 .DS_Store
